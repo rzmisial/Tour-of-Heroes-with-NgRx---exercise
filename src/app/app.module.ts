@@ -10,6 +10,9 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment'; // Angular CLI environemnt
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MaterialModule } from './material.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './heroes/heroes.component';
@@ -45,6 +48,8 @@ import { HeroDetailViewComponent } from './hero-detail-view/hero-detail-view.com
     HttpClientModule,
     EffectsModule.forRoot([HeroEffects]),
     ReactiveFormsModule,
+    MaterialModule,
+    BrowserAnimationsModule,
 
 // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
 // and returns simulated server responses.

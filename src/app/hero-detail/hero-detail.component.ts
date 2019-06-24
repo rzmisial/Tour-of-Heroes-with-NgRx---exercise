@@ -42,7 +42,7 @@ export class HeroDetailComponent implements OnInit {
     this.store.dispatch(heroesGet());
   }
 
-  onSave(heroToSave: Hero){
+  onSave(heroToSave: Hero) {
     this.store.dispatch(heroUpdate({toUpdateHero: heroToSave}));
   }
 }

@@ -1,7 +1,14 @@
 <h1>{{title}}</h1>
-<nav>
-  <a routerLink="/dashboard">Dashboard</a>
-  <a routerLink="/heroes">Heroes</a>
-</nav>
+
+<button [matMenuTriggerFor]="appMenu">
+    Menu
+</button>
+<mat-divider></mat-divider>
+<mat-menu #appMenu="matMenu">
+    <a mat-menu-item routerLink="/dashboard">Dashboard</a>
+    <a mat-menu-item routerLink="/heroes">Heroes</a>
+</mat-menu>
+
 <router-outlet></router-outlet>
+<mat-divider></mat-divider>
 <app-messages></app-messages>

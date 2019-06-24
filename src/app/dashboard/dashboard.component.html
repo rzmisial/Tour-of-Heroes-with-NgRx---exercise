@@ -1,11 +1,18 @@
 <h3>Top Heroes</h3>
-<div class="grid grid-pad">
-  <a *ngFor="let hero of heroes$ | async" class="col-1-4"
-      routerLink="/detail/{{hero.id}}">
-    <div class="module hero">
-      <h4>{{hero.name}}</h4>
-    </div>
-  </a>
-</div>
+
+
+<mat-tab-group>
+    <mat-tab *ngFor="let hero of heroes$ | async" label = {{hero.name}} >
+      <mat-list>
+          <mat-list-item>ID: {{hero.id}}</mat-list-item>
+          <mat-list-item>Name: {{hero.name}}</mat-list-item>
+          <mat-list-item>
+            <div *ngIf="hero.active; else elseBlock">Active: yes</div>
+            <ng-template #elseBlock>Active: no</ng-template>
+          </mat-list-item>
+          <mat-list-item><button routerLink="/detail/{{hero.id}}">details</button></mat-list-item>
+      </mat-list>
+    </mat-tab>
+  </mat-tab-group>
 
 <app-hero-search></app-hero-search>

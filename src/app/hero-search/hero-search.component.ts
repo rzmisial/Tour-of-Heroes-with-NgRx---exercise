@@ -15,7 +15,7 @@ export class HeroSearchComponent implements OnInit {
   heroes$: Observable<Hero[]>;
   private searchTerms = new Subject<string>();
   private lastChecked = 0;
-  
+
   constructor(
     private store: Store<{heroes: Hero[]}>) {
       this.heroes$ = this.store.select(getSearchedHeroesSelector);
@@ -23,7 +23,7 @@ export class HeroSearchComponent implements OnInit {
 
   // Push a search term into the observable stream.
   search(searchTerm: string): void {
-    const now = new Date().getTime()
+    const now = new Date().getTime();
     if (now - this.lastChecked > 300) {
       this.lastChecked = new Date().getTime();
       this.store.dispatch(heroesSearch({term: searchTerm}));

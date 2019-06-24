@@ -1,21 +1,43 @@
 <h2>My Heroes</h2>
 
 <div>
-    <label>Hero name:
-      <input #heroName />
-    </label>
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+              Add a new hero
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+    
+      <mat-list>
+        <mat-list-item>
+            <mat-form-field>
+              <input matInput #heroName placeholder="Hero name">
+            </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-slide-toggle #heroActive>
+                Is active?
+            </mat-slide-toggle>
+        </mat-list-item>
+        <mat-list-item>
+          <button (click)="add(heroName.value, heroActive.checked); heroName.value='';
+            heroActive.checked=false;" matTooltip="Add a new hero named with the name provided in the box">
+            add
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-expansion-panel>  
+
     <!-- (click) passes input value to add() and then clears the input -->
-    <button (click)="add(heroName.value); heroName.value=''">
-      add
-    </button>
+    
   </div>
 
 <ul class="heroes">
-  <li *ngFor="let hero of heroes$ | async">
+  <li *ngFor="let hero of heroes$ | async" matTooltip="Show {{hero.name}}'s details'">
     <a routerLink="/detail/{{hero.id}}">
       <span class="badge">{{hero.id}}</span> {{hero.name}}
     </a>
-    <button class="delete" title="delete hero"
+    <button matTooltip="Irreversably removes {{hero.name}} from the list of heroes" class="delete" title="delete hero"
       (click)="delete(hero)">x</button>
   </li>
 </ul>

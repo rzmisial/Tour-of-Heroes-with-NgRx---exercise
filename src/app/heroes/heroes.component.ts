@@ -30,11 +30,11 @@ export class HeroesComponent implements OnInit {
     this.store.dispatch(heroesGet());
   }
 
-  add(name: string): void {
+  add(name: string, active: boolean): void {
     name = name.trim();
 
     if (!name) { return; }
-    const newHero = { name } as Hero;
+    const newHero = { name, active } as Hero;
     this.store.dispatch(heroAdd({newHero}));
   }
 

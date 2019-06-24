@@ -1,13 +1,26 @@
 <div *ngIf="hero">
     <h2>{{hero.name | uppercase}} Details</h2>
-    <div><span>id: </span>{{hero.id}}</div>
     <form [formGroup]="heroForm" (ngSubmit)="save()">
-      <div>
-        <label>name:
-          <input type="text" formControlName="name"/>
-        </label>
-      </div>
-      <button type="button" (click)="goBack()">go back</button>
-      <button type="submit" [disabled]="!heroForm.valid">save</button>
+      <mat-list>
+        <mat-list-item>
+            <h3><span>id: </span>{{hero.id}}</h3>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-form-field>
+              <input matInput type=text formControlName="name" placeholder="name"/>
+            </mat-form-field>
+        </mat-list-item>
+        <mat-list-item>
+            <mat-slide-toggle formControlName="active">
+              Is active?
+            </mat-slide-toggle>
+        </mat-list-item> 
+        <mat-list-item>
+            <button type="button" (click)="goBack()">go back</button>
+            <button type="submit" [disabled]="!heroForm.valid">save</button>
+        </mat-list-item> 
+          
+      </mat-list>
+      
     </form>
 </div>

@@ -14,7 +14,8 @@ export class HeroDetailViewComponent implements OnInit {
 
   heroForm = this.fb.group({
     id: '',
-    name: ''
+    name: '',
+    active: false
   });
 
   _hero: Hero;
@@ -30,7 +31,7 @@ export class HeroDetailViewComponent implements OnInit {
     return this._hero;
   }
 
-  save(){
+  save() {
     this.hero = this.heroForm.value;
     this.heroChange.emit(this._hero);
   }
