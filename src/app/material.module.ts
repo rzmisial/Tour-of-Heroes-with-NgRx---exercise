@@ -20,7 +20,7 @@ import {
   MatGridListModule,
   MatExpansionModule,
   MatAutocompleteModule,
-  MatOptionModule
+  MatOptionModule,
 } from '@angular/material';
 
 @NgModule({
@@ -42,7 +42,8 @@ import {
     MatGridListModule,
     MatExpansionModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatTableModule
   ],
   exports: [
     MatButtonModule,
@@ -62,7 +63,8 @@ import {
     MatGridListModule,
     MatExpansionModule,
     MatAutocompleteModule,
-    MatOptionModule
+    MatOptionModule,
+    MatTableModule
   ]
 })
 

@@ -14,6 +14,7 @@ import { getHeroesSelector } from '../hero.reducer';
 export class HeroesComponent implements OnInit {
 
   heroes$: Observable<Hero[]>;
+  displayedColumns: string[] = ['id', 'name', 'delete'];
 
   constructor(
     private store: Store<{ heroes: Hero[] }>
