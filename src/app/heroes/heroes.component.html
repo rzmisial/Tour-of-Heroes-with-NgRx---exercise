@@ -41,7 +41,7 @@
     <td mat-cell *matCellDef="let hero"> <a mat-button routerLink="/detail/{{hero.id}}">{{hero.name}}</a> </td>
   </ng-container>
   <ng-container matColumnDef="delete">
-    <th mat-header-cell *matHeaderCellDef> delete </th>
+    <th mat-header-cell *matHeaderCellDef>  </th>
     <td mat-cell *matCellDef="let hero"> 
         <button matTooltip="Irreversably removes {{hero.name}} from the list of heroes"  title="delete hero"
       (click)="delete(hero)">x</button>

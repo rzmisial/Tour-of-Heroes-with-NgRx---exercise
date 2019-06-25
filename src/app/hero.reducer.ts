@@ -1,43 +1,35 @@
 import { createReducer, on, State, Action, createFeatureSelector, createSelector } from '@ngrx/store';
+import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { Hero } from './hero';
 import { heroesGetSuccess, heroAddSuccess, heroDeleteSuccess,
     heroUpdateSuccess, heroesSearchSuccess, heroesSearchReset } from './hero.actions';
 
-export interface DataState {
-    heroes: Hero[];
-    fittingHeroes: Hero[];
+export interface DataState extends EntityState<Hero> {
+    searchedHeroes: Hero[];
 }
 
-// export const initialState: Hero[] = [];
+export const adapter: EntityAdapter<Hero> = createEntityAdapter<Hero>();
 
-export const initialState: DataState = {
-    heroes: [],
-    fittingHeroes: []
-};
+export const initialState: DataState = adapter.getInitialState({
+    searchedHeroes: []
+});
 
 // The way the reducer is being created has changed.
 // We use a reducer function now - read a bit more about it.
 export const heroReducerCreator = createReducer(initialState,
     on( heroesGetSuccess, (state, action) => {
-        return {...state, heroes: action.payload }; }),
+        return adapter.addAll(action.payload, state)/*{...state, heroes: action.payload }*/; }),
     on( heroAddSuccess, (state, action) => {
-        const newHeroes =  state.heroes.slice();
-        newHeroes.push(action.newHero);
-        return {...state, heroes:  newHeroes}; }),
+        return adapter.addOne(action.newHero, state); }),
     on( heroDeleteSuccess, (state, action) => {
-        let newHeroes =  state.heroes.slice();
-        newHeroes = newHeroes.filter(h => h.id !== action.toDeleteHeroId);
-        return {...state, heroes:  newHeroes}; }),
+        return adapter.removeOne(action.toDeleteHeroId, state); }),
     on( heroUpdateSuccess, (state, action) => {
-        const newHeroes = state.heroes.slice();
-        const heroIndex = newHeroes.findIndex(h => h.id === action.toUpdateHero.id);
-        newHeroes[heroIndex] = action.toUpdateHero;
-        return {... state, heroes: newHeroes }; }),
+        return adapter.upsertOne(action.toUpdateHero, state); }),  // TODO: check UPDATE of type Update<Hero>
     on( heroesSearchSuccess, (state, action) => {
-        return {...state, fittingHeroes: action.payload }; }),
+        return {...state, searchedHeroes: action.payload }; }),     // TODO: need to fix hero searching
     on( heroesSearchReset, (state, action) => {
-        return {...state, fittingHeroes: [] }; })
+        return {...state, searchedHeroes: [] }; })
 );
 
 export function heroReducer(state: DataState | undefined, action: Action) {
@@ -52,26 +44,29 @@ export const heroState = createFeatureSelector<DataState>('heroes');
 
 // We create the selector. we use the createFeatureSelector on our type DataState
 // and select just the "heroes" slice. Works because we have "heroes" defined as a slice od DataState.
-export const getHeroesSelector = createSelector(
-    heroState,
-    (state) => state.heroes
-);
+export const {
+    selectAll: selectAllHeroes,
+    selectIds: selectAllHeroesIds
+  } = adapter.getSelectors(heroState);
 
 export const getSearchedHeroesSelector = createSelector(
     heroState,
-    (state) => state.fittingHeroes
+    (state) =>  state.searchedHeroes
 );
 
 // Btw. createSelector can also be used to create a selector based on several slices at the same time.
 // READ MORE ABOUT SELECTORS!!!
 
 export const getFirstFiveHeroesSelector = createSelector(
-    heroState,
-    (state) => state.heroes = state.heroes.slice(0, 4)
+    selectAllHeroes,
+    (heroes) => heroes = heroes.slice(0, 5)
 );
 
 export const getHeroByIdSelector = createSelector(
-    heroState,
-    (state, props) => {
-        return state.heroes.find(h => h.id === props.id); }
+    selectAllHeroes,
+    selectAllHeroesIds,
+    (heroEntities, heroIds, props) => {
+        const pos = heroIds.indexOf(props.id);
+        return heroEntities[pos];
+    }
 );

@@ -2,7 +2,8 @@
 
 
 <mat-tab-group>
-    <mat-tab *ngFor="let hero of heroes$ | async" label = {{hero.name}} >
+    <mat-tab *ngFor="let hero of heroes$ | async" label = {{hero.name}}>
+      <a mat-button routerLink="/detail/{{hero.id}}">
       <mat-list>
           <mat-list-item>ID: {{hero.id}}</mat-list-item>
           <mat-list-item>Name: {{hero.name}}</mat-list-item>
@@ -10,8 +11,8 @@
             <div *ngIf="hero.active; else elseBlock">Active: yes</div>
             <ng-template #elseBlock>Active: no</ng-template>
           </mat-list-item>
-          <mat-list-item><button routerLink="/detail/{{hero.id}}">details</button></mat-list-item>
       </mat-list>
+    </a>
     </mat-tab>
   </mat-tab-group>
 

@@ -4,7 +4,7 @@ import { Store, select } from '@ngrx/store';
 
 import { Hero } from '../hero';
 import { heroesGet, heroAdd, heroDelete } from '../hero.actions';
-import { getHeroesSelector } from '../hero.reducer';
+import { selectAllHeroes } from '../hero.reducer';
 
 @Component({
   selector: 'app-heroes',
@@ -19,7 +19,7 @@ export class HeroesComponent implements OnInit {
   constructor(
     private store: Store<{ heroes: Hero[] }>
   ) {
-    this.heroes$ = this.store.select(getHeroesSelector);    // <-- We used a new selector here
+    this.heroes$ = this.store.select(selectAllHeroes);
     // VERY USEFUL (memoisation)
   }
 

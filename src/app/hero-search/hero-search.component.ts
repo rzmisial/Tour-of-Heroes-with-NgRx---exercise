@@ -3,7 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { Hero } from '../hero';
-import { getSearchedHeroesSelector } from '../hero.reducer';
+import { getSearchedHeroesSelector, selectAllHeroes } from '../hero.reducer';
 import { heroesSearch } from '../hero.actions';
 
 @Component({
@@ -12,7 +12,7 @@ import { heroesSearch } from '../hero.actions';
   styleUrls: [ './hero-search.component.styl' ]
 })
 export class HeroSearchComponent implements OnInit {
-  heroes$: Observable<Hero[]>;
+  heroes$: Observable<Hero[]>;  // changed to observable
   private searchTerms = new Subject<string>();
   private lastChecked = 0;
 
